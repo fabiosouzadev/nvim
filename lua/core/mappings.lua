@@ -13,12 +13,13 @@ M.general = {
     ["<Down>"] = { "<Nop>", "Disable down" },
     ["<Left>"] = { "<Nop>", "Disable left" },
     ["<Right>"] = { "<Nop>", "Disable right" },
+    -- ["<leader>e"] = { ':vsplit %<cr>"', "Edit configuration" },
+    -- ["<leader>s"] = { "<Cmd>:source %<CR>", "Reload Config" },
   },
 }
 
 M.barbar = {
   plugin = true,
-
   n = {
     -- cycle through buffers
     ["<tab>"] = { "<Cmd>BufferNext<CR>", "Goto next buffer" },
@@ -240,18 +241,28 @@ M.telescope = {
     ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "Find oldfiles" },
     ["<leader>ft"] = { "<cmd> Telescope treesitter <CR>", "Find Treesitter" },
     ["<leader>fz"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" },
+    ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "Find bookmarks" },
+    ["<leader>f?"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" },
 
     -- git
     ["<leader>fc"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
     ["<leader>fs"] = { "<cmd> Telescope git_status <CR>", "Git status" },
+    ["<leader>fgg"] = { "<cmd> Telescope git_files <CR>", "Git files" },
+
+    -- Lsp
+    ["<leader>flr"] = { '<cmd>Telescope lsp_references <cr>', "Lsp references" },
+    ["<leader>fld"] = { '<cmd>Telescope lsp_definitions <cr>', "Lsp definitions" },
+    ["<leader>fli"] = { '<cmd>Telescope lsp_implementations <cr>', "Lsp Implementations" },
+    ["<leader>flt"] = { '<cmd>Telescope lsp_type_definitions <cr>', "Lsp Type Definitions" },
+    ["<leader>fl]"] = { '<cmd>Telescope diagnostics <cr>', "Lsp Type Definitions" },
 
     -- pick a hidden term
     -- ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
 
     -- theme switcher
-    ["<leader>th"] = { "<cmd> Telescope colorscheme <CR>", "theme switcher" },
+    -- ["<leader>th"] = { "<cmd> Telescope colorscheme <CR>", "theme switcher" },
 
-    ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
+    
   },
 }
 
