@@ -15,6 +15,23 @@ M.general = {
     ["<Right>"] = { "<Nop>", "Disable right" },
     -- ["<leader>e"] = { ':vsplit %<cr>"', "Edit configuration" },
     -- ["<leader>s"] = { "<Cmd>:source %<CR>", "Reload Config" },
+    
+    -- Window
+    -- Split
+    ["<c-w>s"] = { ":split<cr>", "Split Horrizontal" },
+    ["<c-w>v"] = { ":vsplit<cr>", "Split Vertical" },
+    ["<c-w>c"] = { ":close<cr>", "Close Split" },
+    ["<c-w>n"] = { "<C-w>n", "Blank split -h " },
+    ["<c-w>q"] = { "<C-w>q", "Close this pane" },
+    ["<c-w>o"] = { "<C-w>o", "Close other panes" },
+    ["<c-w>r"] = { "<C-w>r", "Rotate Pane" },
+    ["<c-w>x"] = { "<C-w>x", "exchange current window with next one" },
+
+    -- Resize
+    ["<c-w>j"] = { ":resize -2<cr>", ":resize -2<cr>" },
+    ["<c-w>k"] = { ":resize +2<cr>", ":resize +2<cr>" },
+    ["<c-w>h"] = { ":vertical resize -2<cr>", ":vertical resize -2<cr>" },
+    ["<c-w>l"] = { ":vertical resize +2<cr>", ":vertical resize +2<cr>" }
   },
 }
 
@@ -52,143 +69,46 @@ M.bufferline = {
 
 M.lspconfig = {
   plugin = true,
-
   -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
   n = {
-    ["K"] = {
-      function()
-        vim.lsp.buf.hover()
-      end,
-      "LSP hover",
-    },
+    ["K"] = {"<CMD>lua vim.lsp.buf.hover()<CR>", "LSP hover"},
+    ["gD"] = {"<CMD>lua vim.lsp.buf.declaration()<CR>", "LSP declaration"},
+    ["gd"] = {"<CMD>lua vim.lsp.buf.definition()<CR>", "LSP definition"},
+    ["gi"] = {"<CMD>lua vim.lsp.buf.implementation()<CR>", "LSP implementation"},
+    ["gr"] = {"<CMD>lua vim.lsp.buf.references()<CR>", "LSP references"},
+    ["<C-K>"] = {"<cmd>lua vim.lsp.buf.signature_help()<CR>", "LSP signature help"},
+    ["<leader>D"] = {"<cmd>lua vim.lsp.buf.type_definition()<CR>", "LSP definition type"},
+    ["<leader>rn"] = {"<cmd>lua vim.lsp.buf.rename()<CR>", "LSP rename"},
+    ["<leader>ca"] = {"<cmd>lua vim.lsp.buf.code_action()<CR>", "LSP code action"},
+    ["<leader>f"] = {"<cmd>lua vim.diagnostic.open_float { border = \"rounded\" }<CR>", "Floating diagnostic"},
+    ["[d"] = {"<cmd>lua vim.diagnostic.goto_prev { float = { border = \"rounded\" } } <CR>", "Goto prev"},
+    ["]d"] = {"<cmd>lua vim.diagnostic.goto_next { float = { border = \"rounded\" } } <CR>", "Goto next"},
+    ["<leader>q"] = {"<cmd>lua vim.diagnostic.setloclist()<CR>", "Diagnostic setloclist"},
+    ["<leader>fm"] = {"<cmd>lua vim.lsp.buf.format { async = true } <CR>", "LSP formatting"},
 
-    ["gD"] = {
-      function()
-        vim.lsp.buf.declaration()
-      end,
-      "LSP declaration",
-    },
-
-    ["gd"] = {
-      function()
-        vim.lsp.buf.definition()
-      end,
-      "LSP definition",
-    },
-
-    ["gi"] = {
-      function()
-        vim.lsp.buf.implementation()
-      end,
-      "LSP implementation",
-    },
-
-    ["gr"] = {
-      function()
-        vim.lsp.buf.references()
-      end,
-      "LSP references",
-    },
-
-    ["<C-K>"] = {
-      function()
-        vim.lsp.buf.signature_help()
-      end,
-      "LSP signature help",
-    },
-
-    ["<leader>D"] = {
-      function()
-        vim.lsp.buf.type_definition()
-      end,
-      "LSP definition type",
-    },
-
-    ["<leader>rn"] = {
-      function()
-        vim.lsp.buf.rename()
-      end,
-      "LSP rename",
-    },
-
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
-
-    ["<leader>e"] = {
-      function()
-        vim.diagnostic.open_float { border = "rounded" }
-      end,
-      "Floating diagnostic",
-    },
-
-    ["[d"] = {
-      function()
-        vim.diagnostic.goto_prev { float = { border = "rounded" } }
-      end,
-      "Goto prev",
-    },
-
-    ["]d"] = {
-      function()
-        vim.diagnostic.goto_next { float = { border = "rounded" } }
-      end,
-      "Goto next",
-    },
-
-    ["<leader>q"] = {
-      function()
-        vim.diagnostic.setloclist()
-      end,
-      "Diagnostic setloclist",
-    },
-
-    ["<leader>fm"] = {
-      function()
-        vim.lsp.buf.format { async = true }
-      end,
-      "LSP formatting",
-    },
-
-    ["<leader>wa"] = {
-      function()
-        vim.lsp.buf.add_workspace_folder()
-      end,
-      "Add workspace folder",
-    },
-
-    ["<leader>wr"] = {
-      function()
-        vim.lsp.buf.remove_workspace_folder()
-      end,
-      "Remove workspace folder",
-    },
-
-    ["<leader>wl"] = {
-      function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end,
-      "List workspace folders",
-    },
+    -- Workspaces
+    ["<leader>wa"] = {"<cmd>lua vim.lsp.buf.add_workspace_folder() <CR>", "Add workspace folder"},
+    ["<leader>wr"] = {"<cmd>lua vim.lsp.buf.remove_workspace_folder() <CR>", "Remove workspace folder"},
+    ["<leader>wl"] = {"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders())) <CR>", "List workspace folders"},
 
     --- :Telescope LSP --
-    ["<leader>flr"] = { '<cmd>lua require "telescope.builtin".lsp_references()<cr>', "Lsp references" },
-    ["<leader>fld"] = { '<cmd>lua require "telescope.builtin".lsp_definitions()<cr>', "Lsp definitions" },
-    ["<leader>fli"] = { '<cmd>lua require "telescope.builtin".lsp_implementations()<cr>', "Lsp implementations" },
-    ["<leader>flt"] = { '<cmd>lua require "telescope.builtin".lsp_type_definitions()<cr>', "Lsp type_definition" },
+    ["<leader>flr"] = { '<cmd>Telescope lsp_references <cr>', "Lsp references" },
+    ["<leader>fld"] = { '<cmd>Telescope lsp_definitions <cr>', "Lsp definitions" },
+    ["<leader>fli"] = { '<cmd>Telescope lsp_implementations <cr>', "Lsp Implementations" },
+    ["<leader>flt"] = { '<cmd>Telescope lsp_type_definitions <cr>', "Lsp Type Definitions" },
   },
 
   v = {
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
+    ["<leader>ca"] = {"<cmd>lua vim.lsp.buf.code_action()<CR>", "LSP code action"},
   },
+}
+
+M.lspsaga = {
+  n = {
+    ["gp"] = { "<cmd>Lspsaga peek_definition<cr>", "Lspsaga Preview def" },
+    ["]e"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Go To Next Diagnostic" },
+    ["[e"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Go To Previous Diagnostic" },
+  }
 }
 
 M.dap = {
@@ -248,13 +168,6 @@ M.telescope = {
     ["<leader>fc"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
     ["<leader>fs"] = { "<cmd> Telescope git_status <CR>", "Git status" },
     ["<leader>fgg"] = { "<cmd> Telescope git_files <CR>", "Git files" },
-
-    -- Lsp
-    ["<leader>flr"] = { '<cmd>Telescope lsp_references <cr>', "Lsp references" },
-    ["<leader>fld"] = { '<cmd>Telescope lsp_definitions <cr>', "Lsp definitions" },
-    ["<leader>fli"] = { '<cmd>Telescope lsp_implementations <cr>', "Lsp Implementations" },
-    ["<leader>flt"] = { '<cmd>Telescope lsp_type_definitions <cr>', "Lsp Type Definitions" },
-    ["<leader>fl]"] = { '<cmd>Telescope diagnostics <cr>', "Lsp Type Definitions" },
 
     -- pick a hidden term
     -- ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
@@ -371,6 +284,12 @@ M.gitsigns = {
       "Diff this",
     },
   },
+}
+
+M.harpoon = {
+  n = {
+    ["<c-e>"] = {'<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>',"Harpoon Toogle Menu"}
+  }
 }
 
 M.whichkey = {
