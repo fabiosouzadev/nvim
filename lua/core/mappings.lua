@@ -14,7 +14,7 @@ M.general = {
 		["<Left>"] = { "<Nop>", "Disable left" },
 		["<Right>"] = { "<Nop>", "Disable right" },
 		-- ["<leader>e"] = { ':vsplit %<cr>"', "Edit configuration" },
-		-- ["<leader>s"] = { "<Cmd>:source %<CR>", "Reload Config" },
+		["<leader>s"] = { "<Cmd>:source $MYVIMRC<CR>", "Reload Config" },
 
 		-- Window
 		-- Split
@@ -244,7 +244,7 @@ M.telescope = {
 		-- git
 		["<leader>fc"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
 		["<leader>fs"] = { "<cmd> Telescope git_status <CR>", "Git status" },
-		["<leader>fgg"] = { "<cmd> Telescope git_files <CR>", "Git files" },
+		["<leader>fi"] = { "<cmd> Telescope git_files <CR>", "Git files" },
 
 		-- pick a hidden term
 		-- ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
