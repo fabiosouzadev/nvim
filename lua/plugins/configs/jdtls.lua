@@ -36,7 +36,15 @@ M.get_workspace = function()
 end
 
 M.get_bundles = function()
-	return {}
+  local mason_registry = require "mason-registry"
+  local java_debug = mason_registry.get_package "java-debug-adapter"
+  local java_test = mason_registry.get_package "java-test"
+  local java_debug_path = java_debug:get_install_path()
+  local java_test_path = java_test:get_install_path()
+  local bundles = {}
+  vim.list_extend(bundles, vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n"))
+  vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar"), "\n"))
+  return bundles
 end
 
 M.get_extendedClientCapabilities = function()

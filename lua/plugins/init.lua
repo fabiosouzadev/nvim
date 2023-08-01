@@ -325,8 +325,6 @@ local plugins = {
 			require("core.utils").lazy_load("nvim-jdtls")
 		end,
 		config = function()
-			-- require("plugins.configs.jdtls").setup()
-
 			-- Autocmd
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = { "java" },
