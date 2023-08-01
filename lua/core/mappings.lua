@@ -106,6 +106,21 @@ M.lspconfig = {
 	},
 }
 
+M.jdtls = {
+	n = {
+		["<leader>joi"] = { "<cmd>lua require'jdtls'.organize_imports()<cr>", "Organize Imports" },
+		["<leader>jev"] = { "<cmd>lua require('jdtls').extract_variable()<cr>", "Extract Variable" },
+		["<leader>jec"] = { "<cmd>lua require('jdtls').extract_constant()<cr>", "Extract Constant" },
+		["<leader>jtc"] = { "<cmd>lua require'jdtls'.test_class()<cr>", "Test Class" },
+		["<leader>jtm"] = { "<cmd>lua require'jdtls'.test_nearest_method()<cr>", "Teste Method" },
+	},
+    v = {
+		["<leader>jev"] = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract Variable" },
+		["<leader>jec"] = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract Constant" },
+		["<leader>jem"] = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract Method" },
+    },
+}
+
 M.lspsaga = {
 	n = {
 		["gp"] = { "<cmd>Lspsaga peek_definition<cr>", "Lspsaga Preview def" },
