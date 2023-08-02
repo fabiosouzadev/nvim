@@ -1,6 +1,12 @@
 local M = {}
 
+M.cache_vars = {}
+
 M.get_jdtls_paths = function()
+	if M.cache_vars.paths then
+		return M.cache_vars.paths
+	end
+
 	local paths = {}
 
 	local mason_registry = require("mason-registry")
@@ -20,6 +26,7 @@ M.get_jdtls_paths = function()
 	paths.lombok = jdtls_path .. "/lombok.jar"
 	paths.launcher_jar = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
 
+	M.cache_vars.paths = paths
 	return paths
 end
 
@@ -28,23 +35,39 @@ M.get_root_dir = function()
 end
 
 M.get_workspace = function()
-	local home = os.getenv("HOME")
-	local workspace_path = home .. "/.local/share/nde/jdtls-workspace/"
+	if M.cache_vars.paths.workspace_dir then
+		return M.cache_vars.paths.workspace_dir
+	end
+
+	local workspace_path = vim.fn.stdpath("cache") .. "/nvim-jdtls"
 	local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 	local workspace_dir = workspace_path .. project_name
+
+	M.cache_vars.paths.workspace_dir = workspace_dir
 	return workspace_dir
 end
 
 M.get_bundles = function()
-  local mason_registry = require "mason-registry"
-  local java_debug = mason_registry.get_package "java-debug-adapter"
-  local java_test = mason_registry.get_package "java-test"
-  local java_debug_path = java_debug:get_install_path()
-  local java_test_path = java_test:get_install_path()
-  local bundles = {}
-  vim.list_extend(bundles, vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n"))
-  vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar"), "\n"))
-  return bundles
+	if M.cache_vars.paths.bundles then
+		return M.cache_vars.paths.bundles
+	end
+
+	local mason_registry = require("mason-registry")
+	local java_debug = mason_registry.get_package("java-debug-adapter")
+	local java_test = mason_registry.get_package("java-test")
+	local java_debug_path = java_debug:get_install_path()
+	local java_test_path = java_test:get_install_path()
+
+	local bundles = {}
+
+	vim.list_extend(
+		bundles,
+		vim.split(vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n")
+	)
+	vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar"), "\n"))
+
+	M.cache_vars.paths.bundles = bundles
+	return bundles
 end
 
 M.get_extendedClientCapabilities = function()
@@ -159,13 +182,30 @@ M.get_java_settings = function()
 			--     profile = "GoogleStyle",
 			--   },
 			-- },
+			completion = {
+				favoriteStaticMembers = {
+					"org.hamcrest.MatcherAssert.assertThat",
+					"org.hamcrest.Matchers.*",
+					"org.hamcrest.CoreMatchers.*",
+					"org.junit.jupiter.api.Assertions.*",
+					"java.util.Objects.requireNonNull",
+					"java.util.Objects.requireNonNullElse",
+					"org.mockito.Mockito.*",
+				},
+				filteredTypes = {
+					"com.sun.*",
+					"io.micrometer.shaded.*",
+					"java.awt.*",
+					"jdk.*",
+					"sun.*",
+				},
+			},
 		},
 	}
 end
 
 M.jdtls_on_attach = function(_, bufnr)
-
-    vim.lsp.codelens.refresh()
+	vim.lsp.codelens.refresh()
 
 	-- debugger
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
