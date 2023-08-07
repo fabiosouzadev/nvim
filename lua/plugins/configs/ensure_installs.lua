@@ -35,7 +35,7 @@ M.ensure_installed_null_ls = {
 	"stylua", -- lua formatter
 	"black",
 	"fixjson",
-    "google-java-format",
+    "google_java_format",
 	-- diagnostics
 	"flake8",
 	"markdownlint",

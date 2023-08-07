@@ -22,6 +22,7 @@ M.sources = {
       PRETTIERD_LOCAL_PRETTIER_ONLY = 1,
     },
   }),
+  formatting.google_java_format,
   -- diagnostics
   diagnostics.markdownlint,
   diagnostics.flake8,
