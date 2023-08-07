@@ -78,8 +78,8 @@ M.ensure_installed_treesitter = {
 
 M.ensure_installed_dap = {
 	"python",
-	"java-debug-adapter",
-	"java-test",
+	"javadbg",
+	"javatest",
 }
 
 return M

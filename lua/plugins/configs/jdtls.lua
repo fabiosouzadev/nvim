@@ -144,7 +144,7 @@ M.get_java_settings = function()
 				downloadSources = true,
 			},
 			configuration = {
-				updateBuildConfiguration = "interactive",
+				-- updateBuildConfiguration = "interactive",
 				-- NOTE: Add the available runtimes here
 				-- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 				-- runtimes = {
@@ -208,10 +208,12 @@ M.jdtls_on_attach = function(_, bufnr)
 	vim.lsp.codelens.refresh()
 
 	-- debugger
+	require("jdtls.setup").add_commands()
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.dap").setup_dap_main_class_configs()
-	require("jdtls.setup").add_commands()
 	require("core.utils").load_mappings("jdtls", { buffer = bufnr })
+    require'lspkind'.init()
+    require'lspsaga'.init_lsp_saga()
 
 	-- codelens
 	vim.api.nvim_create_autocmd("BufWritePost", {
