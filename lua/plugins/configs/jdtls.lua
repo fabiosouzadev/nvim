@@ -1,5 +1,7 @@
 local M = {}
 
+M.java_cmds = vim.api.nvim_create_augroup("java_cmds", { clear = true })
+
 M.cache_vars = {}
 
 M.get_jdtls_paths = function()
@@ -204,16 +206,33 @@ M.get_java_settings = function()
 	}
 end
 
-M.jdtls_on_attach = function(_, bufnr)
-	vim.lsp.codelens.refresh()
+M.enable_codelens = function(bufnr)
+	pcall(vim.lsp.codelens.refresh)
 
-	-- debugger
-	require("jdtls.setup").add_commands()
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		buffer = bufnr,
+		group = M.java_cmds,
+		desc = "refresh codelens",
+		callback = function()
+			pcall(vim.lsp.codelens.refresh)
+		end,
+	})
+end
+
+M.enable_debugger = function(bufnr)
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.dap").setup_dap_main_class_configs()
 	require("core.utils").load_mappings("jdtls", { buffer = bufnr })
-    require'lspkind'.init()
-    require'lspsaga'.init_lsp_saga()
+end
+
+M.jdtls_on_attach = function(_, bufnr)
+	M.enable_debugger(bufnr)
+	M.enable_codelens(bufnr)
+
+	-- debugger
+	require("jdtls.setup").add_commands()
+	require("lspkind").init()
+	require("lspsaga").init_lsp_saga()
 
 	-- codelens
 	vim.api.nvim_create_autocmd("BufWritePost", {
