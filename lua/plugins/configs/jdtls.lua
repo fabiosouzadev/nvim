@@ -93,7 +93,7 @@ M.build_cmd = function()
 		"-Dlog.protocol=true",
 		"-Dlog.level=ALL",
 		"-javaagent:" .. paths.lombok,
-		"-Xmx1g",
+		"-Xms1g",
 		"--add-modules=ALL-SYSTEM",
 		"--add-opens",
 		"java.base/java.util=ALL-UNNAMED",

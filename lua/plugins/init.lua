@@ -323,6 +323,8 @@ local plugins = {
 		"mfussenegger/nvim-jdtls",
 		init = function()
 			require("core.utils").lazy_load("nvim-jdtls")
+		end,
+		config = function()
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = { "java" },
 				callback = function()

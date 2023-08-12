@@ -111,7 +111,7 @@ M.jdtls = {
 		["<leader>ji"] = { "<cmd>lua require'jdtls'.organize_imports()<cr>", "Organize Imports" },
 		["<leader>jv"] = { "<cmd>lua require('jdtls').extract_variable()<cr>", "Extract Variable" },
 		["<leader>jc"] = { "<cmd>lua require('jdtls').extract_constant()<cr>", "Extract Constant" },
-		["<leader>jm"] = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract Method" },
+		["<leader>jm"] = { "<cmd>lua require('jdtls').extract_method()<cmd>", "Extract Method" },
 		["<leader>jtc"] = { "<cmd>lua require'jdtls'.test_class()<cr>", "Test Class" },
 		["<leader>jtm"] = { "<cmd>lua require'jdtls'.test_nearest_method()<cr>", "Teste Method" },
 	},
