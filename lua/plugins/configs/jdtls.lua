@@ -93,7 +93,7 @@ M.build_cmd = function()
 		"-Dlog.protocol=true",
 		"-Dlog.level=ALL",
 		"-javaagent:" .. paths.lombok,
-		"-Xms1g",
+		"-Xmx1g",
 		"--add-modules=ALL-SYSTEM",
 		"--add-opens",
 		"java.base/java.util=ALL-UNNAMED",
@@ -146,7 +146,7 @@ M.get_java_settings = function()
 				downloadSources = true,
 			},
 			configuration = {
-				-- updateBuildConfiguration = "interactive",
+				updateBuildConfiguration = "interactive",
 				-- NOTE: Add the available runtimes here
 				-- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 				-- runtimes = {
@@ -227,7 +227,7 @@ end
 
 M.jdtls_on_attach = function(_, bufnr)
 	M.enable_debugger(bufnr)
-	M.enable_codelens(bufnr)
+	-- M.enable_codelens(bufnr)
 
 	-- debugger
 	require("jdtls.setup").add_commands()
@@ -265,6 +265,8 @@ M.setup = function()
 
 		flags = {
 			allow_incremental_sync = true,
+			debounce_text_changes = 150,
+			server_side_fuzzy_completion = true,
 		},
 
 		-- Here you can configure eclipse.jdt.ls specific settings
