@@ -56,6 +56,15 @@ M.lsp_capabilites = function()
 		},
 	}
 
+	capabilities.workspace = {
+		didChangeWatchedFiles = {
+			dynamicRegistration = true,
+		},
+		didChangeConfiguration = {
+			dynamicRegistration = true,
+		},
+	}
+
 	return capabilities
 end
 
