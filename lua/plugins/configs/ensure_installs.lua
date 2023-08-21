@@ -19,6 +19,7 @@ M.lsp_to_mason = {
 	{ lsp = "kotlin_language_server", mason = "kotlin-language-server" },
 	{ lsp = "lua_ls", mason = "lua-language-server" },
 	{ lsp = "pyright", mason = "pyright" },
+	{ lsp = "phpactor", mason = "phpactor" },
 	{ lsp = "rust_analyzer", mason = "rust-analyzer" },
 	{ lsp = "sqlls", mason = "sqlls" },
 	{ lsp = "svelte", mason = "svelte-language-server" },
