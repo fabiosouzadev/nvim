@@ -93,6 +93,7 @@ local plugins = {
 	-- indent-blankline
 	{
 		"lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
 		init = function()
 			require("core.utils").lazy_load("indent-blankline.nvim")
 		end,
@@ -101,7 +102,7 @@ local plugins = {
 		end,
 		config = function(_, opts)
 			require("core.utils").load_mappings("blankline")
-			require("indent_blankline").setup(opts)
+			require("ibl").setup(opts)
 		end,
 	},
 
