@@ -6,12 +6,12 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
 -- local hover = null_ls.builtins.hover
-local completion = null_ls.builtins.completion
+-- local completion = null_ls.builtins.completion
 
 
 M.sources = {
   -- snippets support
-  completion.luasnip,
+  -- completion.luasnip,
   -- formatting
   formatting.black.with({ extra_args = { "--line-length", "79", "-t", "py37", "--skip-string-normalization" } }),
   formatting.stylua,
@@ -38,18 +38,18 @@ M.sources = {
   -- hover
 }
 
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-local lsp_formatting = function(bufnr)
-    vim.lsp.buf.format({
-        filter = function(client)
-            return client.name == "null-ls"
-        end,
-        bufnr = bufnr,
-    })
-end
-
 -- -- Format on save
+-- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+--
+-- local lsp_formatting = function(bufnr)
+--     vim.lsp.buf.format({
+--         filter = function(client)
+--             return client.name == "null-ls"
+--         end,
+--         bufnr = bufnr,
+--     })
+-- end
+--
 -- local on_attach = function(client, bufnr)
 --     if client.supports_method("textDocument/formatting") then
 --         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
